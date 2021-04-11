@@ -83,7 +83,6 @@
         </el-form-item>
 
         <el-form-item prop="province" label="家庭省市" size="mini">
-<!--          <el-input v-model="registerForm.province" placeholder="家庭省市"></el-input>-->
           <el-cascader size="mini" :options="areaOptions" v-model="selectedOptions.value"  @change="handleChange" placeholder="请选择省/市/区"></el-cascader>
         </el-form-item>
         <el-form-item prop="addr" label="家庭住址" size="mini">
