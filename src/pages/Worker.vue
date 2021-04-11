@@ -45,8 +45,7 @@
           :current-page="currentPage"
           :page-size="pageSize"
           :total="tableData.length"
-          @current-change="handleCurrentChange"
-      >
+          @current-change="handleCurrentChange">
       </el-pagination>
     </div>
     <!--添加-->
