@@ -281,10 +281,6 @@ export default {
     //弹出编辑页面
     handleEdit(row) {
       this.editVisible = true;
-      this.options = row.province.split(",")
-      this.selectedOptions[0] =TextToCode[this.options[0]].code
-      this.selectedOptions[1] =TextToCode[this.options[0]][this.options[1]].code
-      this.selectedOptions[2] =TextToCode[this.options[0]][this.options[1]][this.options[2]].code
       this.form = {
         id: row.id,
         username: row.username,
