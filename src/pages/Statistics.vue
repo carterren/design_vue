@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import {getAllParts, getAllSupplier, getAllOrder, getAllWorker} from '../api/index'
+import {getAllWorker} from '../api/index'
 export default {
   data(){
     return {
@@ -102,22 +102,7 @@ export default {
         }
       }
       return count;
-    },
-    getSup() {                      //供应商总数
-      getAllSupplier().then(res => {
-        this.supCount = res.length;
-      })
-    },
-    getParts() {                      //歌手数量
-      getAllParts().then(res => {
-        this.PartsCount = res.length;
-      })
-    },
-    getOrder() {                    //歌单数量
-      getAllOrder().then(res => {
-        this.orderCount = res.length;
-      })
-    },
+    }
 
   }
 }

@@ -1,3 +1,4 @@
+
 export const mixin = {
     methods: {
         //提示信息
@@ -79,7 +80,7 @@ export const mixin = {
         closeDialog (formName) {
             this.$refs[formName].resetFields()
             this.dialogVisible = false
-        },
+        }
     }
 
 }

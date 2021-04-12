@@ -65,8 +65,6 @@
         </el-form-item>
         <el-form-item label="角色" size="mini">
           <el-select v-model="registerForm.roleId"  @focus="getRoleIds()" placeholder="请选择员工角色">
-<!--            <el-option label="管理员" value="0">管理员</el-option>-->
-<!--            <el-option label="物料管理员" value="1">物料管理员</el-option>-->
             <el-option v-for="role in this.roleIds"
                     :key="role.roleNum"
                     :value="role.roleNum"
@@ -82,7 +80,7 @@
         </el-form-item>
 
         <el-form-item prop="province" label="家庭省市" size="mini">
-          <el-cascader size="mini" :options="areaOptions" v-model="selectedOptions.value"  @change="handleChange" placeholder="请选择省/市/区"></el-cascader>
+          <el-cascader size="mini" :options="areaOptions" v-model="registerForm.province"  @change="handleChange" placeholder="请选择省/市/区"></el-cascader>
         </el-form-item>
         <el-form-item prop="addr" label="家庭住址" size="mini">
           <el-input v-model="registerForm.addr" placeholder="家庭住址"></el-input>
@@ -95,8 +93,8 @@
       </span>
     </el-dialog>
     <!--修改-->
-    <el-dialog title="修改员工信息" @close="closeDialog('editForm')" :visible.sync="editVisible" width="400px" center>
-      <el-form :model="form" ref="editForm" label-width="80px">
+    <el-dialog title="修改员工信息" @close="closeDialog('form')" :visible.sync="editVisible" width="400px" center>
+      <el-form :model="form" ref="form" label-width="80px">
         <el-form-item prop="username" label="用户名" size="mini">
           <el-input v-model="form.username" placeholder="用户名"></el-input>
         </el-form-item>
@@ -104,10 +102,11 @@
           <el-input v-model="form.password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item label="性别" size="mini">
-          <el-radio-group v-model="form.sex">
-            <el-radio :label="0" :value="0">女</el-radio>
-            <el-radio :label="1" :value="1">男</el-radio>
-          </el-radio-group>
+
+          <el-select v-model="form.sex" placeholder="请选择角色">
+            <el-option  value="1" label="男">男</el-option>
+            <el-option  value="0" label="女">女</el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="角色" size="mini">
           <el-select v-model="form.roleId" placeholder="请选择角色">
@@ -125,7 +124,7 @@
         </el-form-item>
         <el-form-item prop="province" label="家庭省市" size="mini">
 <!--          <el-input v-model="form.province" placeholder="家庭省市"></el-input>-->
-          <el-cascader size="mini" :options="areaOptions" v-model="selectedOptions" @change="handleChange" placeholder="请选择省/市/区"></el-cascader>
+          <el-cascader size="mini"  :options="areaOptions" v-model="form.province" @change="handleChange1" placeholder="请选择省/市/区"></el-cascader>
         </el-form-item>
 
         <el-form-item prop="addr" label="家庭住址" size="mini">
@@ -134,7 +133,7 @@
 
       </el-form>
       <span slot="footer">
-                <el-button size="mini" @click="editVisible = false;resetForm('editForm')">取消</el-button>
+                <el-button size="mini" @click="editVisible = false;resetForm('form')">取消</el-button>
                 <el-button size="mini" @click="editSave">确定</el-button>
             </span>
     </el-dialog>
@@ -164,7 +163,8 @@ export default {
       delVisible: false,          //删除弹窗是否显示
       //省市
       areaOptions : regionData,
-      selectedOptions : [],
+      // selectedOptions : [],
+      // editOptions:[],
       options:[],
       registerForm: {      //添加框
         username: '',
@@ -225,9 +225,14 @@ export default {
 
       //省市
     handleChange(value){
-      this.selectedOptions[0] = CodeToText[value[0]]
-      this.selectedOptions[1] = CodeToText[value[1]]
-      this.selectedOptions[2] = CodeToText[value[2]]
+      this.registerForm.province[0] = CodeToText[value[0]]
+      this.registerForm.province[1] = CodeToText[value[1]]
+      this.registerForm.province[2] = CodeToText[value[2]]
+    },
+    handleChange1(value){
+      this.form.province[0] = CodeToText[value[0]]
+      this.form.province[1] = CodeToText[value[1]]
+      this.form.province[2] = CodeToText[value[2]]
     },
     //获取当前页
     handleCurrentChange(val) {
@@ -257,7 +262,7 @@ export default {
       params.append('password', this.registerForm.password);
       params.append('roleId', this.registerForm.roleId);
       params.append('phone', this.registerForm.phone);
-      params.append('province', this.selectedOptions);
+      params.append('province', this.registerForm.province);
       params.append('addr', this.registerForm.addr);
       params.append('sex', this.registerForm.sex);
       params.append('realName', this.registerForm.realName);
@@ -278,6 +283,9 @@ export default {
     },
     //弹出编辑页面
     handleEdit(row) {
+      this.options[0]=TextToCode[row.province.split(",")[0]].code
+      this.options[1]=TextToCode[row.province.split(",")[0]][row.province.split(",")[1]].code
+      this.options[2]=TextToCode[row.province.split(",")[0]][row.province.split(",")[1]][row.province.split(",")[2]].code
       this.editVisible = true;
       this.form = {
         id: row.id,
@@ -287,7 +295,7 @@ export default {
         sex: row.sex,
         realName: row.realname,
         phone: row.phone,
-        province: CodeToText[this.selectedOptions],
+        province: this.options,
         addr: row.addr,
       }
     },
@@ -299,13 +307,13 @@ export default {
       params.append('password', this.form.password);
       params.append('roleId', this.form.roleId);
       params.append('phone', this.form.phone);
-      params.append('province', this.selectedOptions);
+      params.append('province', this.form.province);
       params.append('addr', this.form.addr);
       params.append('sex', this.form.sex);
       params.append('realName', this.form.realName);
       updateWorker(params)
           .then(res => {
-            this.selectedOptions=[];
+            // this.selectedOptions=[];
             if (res.code == 1) {
               this.getData();
               this.notify("修改成功", "success");
