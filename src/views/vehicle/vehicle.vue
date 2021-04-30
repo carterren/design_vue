@@ -29,12 +29,12 @@
     </el-table>
     <div class="pagination">
       <el-pagination
-          background
-          layout="total,prev,pager,next"
-          :current-page="currentPage"
-          :page-size="pageSize"
-          :total="tableData.length"
-          @current-change="handleCurrentChange"
+        background
+        layout="total,prev,pager,next"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total="tableData.length"
+        @current-change="handleCurrentChange"
       >
       </el-pagination>
     </div>
@@ -104,8 +104,8 @@
 </template>
 
 <script>
-import {delVehicle, getAllVehicle, setVehicle, updateVehicle} from '../api/index';
-import {mixin} from '../mixins/index';
+import {delVehicle, getAllVehicle, setVehicle, updateVehicle} from '../../api/index';
+import {mixin} from '../../mixins/index';
 
 export default {
   mixins: [mixin],
@@ -191,18 +191,18 @@ export default {
       params.append('state', this.registerForm.state);
       // eslint-disable-next-line no-undef
       setVehicle(params)
-          .then(res => {
-            this.$refs['registerForm'].resetFields();
-            if (res.code == 1) {
-              this.getData();
-              this.notify("添加成功", "success");
-            } else {
-              this.notify("添加失败", "error");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then(res => {
+          this.$refs['registerForm'].resetFields();
+          if (res.code == 1) {
+            this.getData();
+            this.notify("添加成功", "success");
+          } else {
+            this.notify("添加失败", "error");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
       this.centerDialogVisible = false;
     },
     //弹出编辑页面
@@ -229,34 +229,34 @@ export default {
       params.append('text', this.form.text);
       params.append('state', this.form.state);
       updateVehicle(params)
-          .then(res => {
-            if (res.code == 1) {
-              this.getData();
-              this.notify("修改成功", "success");
-            } else {
-              this.notify("修改失败", "error");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then(res => {
+          if (res.code == 1) {
+            this.getData();
+            this.notify("修改成功", "success");
+          } else {
+            this.notify("修改失败", "error");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
       this.editVisible = false;
     },
 
     //删除一名员工
     deleteRow() {
       delVehicle(this.idx)
-          .then(res => {
-            if (res) {
-              this.getData();
-              this.notify("删除成功", "success");
-            } else {
-              this.notify("删除失败", "error");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then(res => {
+          if (res) {
+            this.getData();
+            this.notify("删除成功", "success");
+          } else {
+            this.notify("删除失败", "error");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
       this.delVisible = false;
     },
   }

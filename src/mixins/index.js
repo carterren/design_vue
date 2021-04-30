@@ -14,18 +14,25 @@ export const mixin = {
         },
         //获取性别中文
         changeWorkerType(value) {
-            if (value == 0) {
-                return '管理员'
+            if (value == 'admin') {
+                return '系统管理员'
             }
-            if (value == 1) {
-                return '物料管理员'
+            if (value == 'cargoManager') {
+                return '货物管理员'
             }
-            if (value == 2) {
+            if (value == 'driver') {
                 return '司机'
             }
-            if (value == 3) {
+            if (value == 'warehouseManager') {
                 return '仓库管理员'
             }
+            if (value == 'vehicleManager') {
+                return '车辆管理员'
+            }
+            if (value == 'planer') {
+                return '计划管理员'
+            }
+
             return value;
         },
         //获取性别中文

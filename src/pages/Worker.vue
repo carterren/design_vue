@@ -58,10 +58,10 @@
           <el-input v-model="registerForm.password" type="password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item label="性别" size="mini">
-          <el-radio-group v-model="registerForm.sex">
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="0">女</el-radio>
-          </el-radio-group>
+          <el-select v-model="registerForm.sex" placeholder="请选择角色">
+            <el-option  value="1" label="男">男</el-option>
+            <el-option  value="0" label="女">女</el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="角色" size="mini">
           <el-select v-model="registerForm.roleId"  @focus="getRoleIds()" placeholder="请选择员工角色">
@@ -109,7 +109,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="角色" size="mini">
-          <el-select v-model="form.roleId" placeholder="请选择角色">
+          <el-select v-model="form.roleId"  @focus="getRoleIds()" placeholder="请选择角色">
             <el-option v-for="role in this.roleIds"
                        :key="role.roleNum"
                        :value="role.roleNum"
