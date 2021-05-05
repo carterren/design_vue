@@ -23,7 +23,11 @@
           <el-tag type="primary" v-text="scope.row.roleName" v-else></el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="性别" prop="sex" style="width: 60px;"></el-table-column>
+      <el-table-column align="center" label="性别"  style="width: 60px;">
+        <template slot-scope="scope">
+          {{changeSex(scope.row.sex)}}
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="联系方式" prop="phone" style="width: 60px;"></el-table-column>
       <el-table-column align="center" label="地址" prop="addr" style="width: 60px;"></el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" width="170"></el-table-column>
@@ -75,8 +79,11 @@
           <el-input type="text" v-model="tempUser.realname">
           </el-input>
         </el-form-item>
-        <el-form-item label="性别" required>
-          <el-input type="text" v-model="tempUser.sex"></el-input>
+        <el-form-item label="性别" size="mini">
+          <el-radio-group v-model="tempUser.sex">
+            <el-radio :label="0">女</el-radio>
+            <el-radio :label="1">男</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="联系方式" required>
           <el-input type="text" v-model="tempUser.phone"></el-input>
@@ -95,8 +102,10 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import { mixin } from '../../mixins/index';
 
   export default {
+    mixins: [mixin],
     data() {
       return {
         totalCount: 0, //分页组件--数据总条数
@@ -104,7 +113,7 @@
         listLoading: false,//数据加载等待动画
         listQuery: {
           pageNum: 1,//页码
-          pageRow: 50,//每页条数
+          pageRow: 10,//每页条数
         },
         roles: [],//角色列表
         dialogStatus: 'create',

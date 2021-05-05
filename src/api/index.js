@@ -5,16 +5,16 @@ import {get,post} from "@/api/http";
 
 //============员工相关================
 //查询员工
-export  const getAllWorker = ()=>get(`/worker/allWorker`);
+export  const getAllWorker = ()=>get(`/user/list`);
 //添加员工
-export  const setWorker = (params)=>post(`/worker/add`,params);
+export  const setWorker = (params)=>post(`/user/addUser`,params);
 //修改员工
-export const updateWorker = (params)=>post(`/worker/update`,params);
+export const updateWorker = (params)=>post(`/user/updateUser`,params);
 //删除员工
-export const delWorker = (id)=>get(`/worker/delete?id=${id}`);
+export const delWorker = (id)=>get(`/user/delete?id=${id}`);
 
 //============角色相关================
-export  const getAllWorkerType = ()=>get(`/workerType/allWorkerType`);
+export  const getAllWorkerType = ()=>get(`/workerType/listRole`);
 //添加员工
 export  const setWorkerType = (params)=>post(`/workerType/add`,params);
 //修改员工

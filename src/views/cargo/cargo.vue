@@ -10,7 +10,11 @@
     <el-table size="mini" ref="multipleTable" border style="width:100%" height="680px" :data="data"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
-      <el-table-column prop="type" label="货物种类" width="100" align="center"/>
+      <el-table-column  label="货物种类" width="100" align="center">
+        <template slot-scope="scope">
+          {{changeCargoType(scope.row.type)}}
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="货物名称"  width="100" align="center"/>
       <el-table-column prop="weight" label="重量"  width="100" align="center"/>
       <el-table-column prop="temp" label="温度"  width="100" align="center"/>
